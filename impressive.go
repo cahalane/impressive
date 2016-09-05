@@ -40,7 +40,17 @@ type ResourceEvent struct {
 	EndDateTime   string `json:"EndDateTime"`
 }
 
-func GetICal(email, password string) (string, error) {
+func GetICal(email, password string) (str string, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			var ok bool
+			err, ok = r.(error)
+			if !ok {
+				err = fmt.Errorf("pkg: %v", r)
+			}
+		}
+	}()
+
 	events, err := GetEvents(email, password)
 
 	c := ical.NewBasicVCalendar()
@@ -81,7 +91,6 @@ func GetICal(email, password string) (string, error) {
 	}
 
 	return b.String(), err
-
 }
 
 func GetEvents(email, password string) ([]ResourceEvent, error) {

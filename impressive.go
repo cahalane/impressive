@@ -24,9 +24,9 @@ const (
 	timeFormat = "2006-01-02T15:04:05-07:00" //ISO8601
 )
 
-type CalendarResponse []RespObject
+type calendarResponse []respObject
 
-type RespObject struct {
+type respObject struct {
 	Identity       string          `json:"Identity"`
 	ResourceEvents []ResourceEvent `json:"ResourceEvents"`
 }
@@ -85,18 +85,18 @@ func GetICal(email, password string) (string, error) {
 }
 
 func GetEvents(email, password string) ([]ResourceEvent, error) {
-	j, err := getCalendarJSONString(email, password)
+	j, err := getCalendarJSON(email, password)
 	if err != nil {
 		return nil, err
 	}
 
-	var resp CalendarResponse
+	var resp calendarResponse
 	json.Unmarshal(j, &resp)
 
 	return resp[0].ResourceEvents, nil
 }
 
-func getCalendarJSONString(email, password string) ([]byte, error) {
+func getCalendarJSON(email, password string) ([]byte, error) {
 	token, err := fullGetToken(email, password)
 	if err != nil {
 		return nil, err

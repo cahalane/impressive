@@ -20,6 +20,10 @@ var (
 	cal = "https://scientia-api-1-4-0.azurewebsites.net//api/Calendar"
 )
 
+var (
+	mods = make(map[string]string)
+)
+
 const (
 	timeFormat = "2006-01-02T15:04:05-07:00" //ISO8601
 )
@@ -73,7 +77,15 @@ func GetICal(email, password string) (str string, err error) {
 		if err != nil {
 			return "", err
 		}
-		summary := fmt.Sprintf("%v %v", i.Name, i.EventType)
+
+		var summary string
+		modName, found := mods[strings.Split(i.Name, "/")[0]]
+		if found {
+			summary = fmt.Sprintf("%v %v (%v)", i.Name, i.EventType, modName)
+		} else {
+			summary = fmt.Sprintf("%v %v", i.Name, i.EventType)
+		}
+
 		e := &ical.VEvent{
 			UID:      i.Identity,
 			DTSTART:  start,

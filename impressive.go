@@ -3,12 +3,12 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -42,10 +42,14 @@ type ResourceEvent struct {
 type retrieveCal struct{}
 
 func main() {
-	portF := flag.String("port", ":3000", "Port number of server, default \":3000\"")
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
 	http.Handle("/", &retrieveCal{})
 
-	log.Fatal(http.ListenAndServe(*portF, nil))
+	log.Fatal(http.ListenAndServe(port, nil))
 }
 
 func (i *retrieveCal) ServeHTTP(resp http.ResponseWriter, req *http.Request) {

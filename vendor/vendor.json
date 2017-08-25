@@ -1,0 +1,13 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "07sNpJVORc5+I6N2Cn9OsqQWcgs=",
+			"path": "github.com/colm2/ical",
+			"revision": "1ecf51c2ab949186977327d4550a65881fcce1b2",
+			"revisionTime": "2016-09-05T02:26:13Z"
+		}
+	],
+	"rootPath": "github.com/colm2/impressive"
+}

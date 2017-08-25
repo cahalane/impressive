@@ -49,7 +49,7 @@ func main() {
 	}
 	http.Handle("/", &retrieveCal{})
 
-	log.Fatal(http.ListenAndServe(port, nil))
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 func (i *retrieveCal) ServeHTTP(resp http.ResponseWriter, req *http.Request) {

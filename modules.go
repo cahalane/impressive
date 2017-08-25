@@ -1,4 +1,4 @@
-package impressive
+package main
 
 // List of modules scraped by this script: https://gist.github.com/colm2/8d7bc4e149ff5350a7ce8340ed8ee744
 

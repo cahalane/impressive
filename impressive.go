@@ -55,7 +55,7 @@ func main() {
 func (i *retrieveCal) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	resp.Header().Set("Access-Control-Allow-Origin", "*")
 
 	cal, err := GetICal(body)
 

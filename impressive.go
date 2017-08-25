@@ -54,7 +54,8 @@ func (i *retrieveCal) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 	cal, err := GetICal(body)
 
 	if err != nil {
-		io.WriteString(resp, "{\"ok\":false, \"error\":\""+err.Error()+"\"}")
+		http.Error(resp, http.StatusText(http.StatusInternalServerError),
+			http.StatusInternalServerError)
 	} else {
 		resp.Header().Set("Content-Type", "text/calendar")
 		io.WriteString(resp, cal)

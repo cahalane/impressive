@@ -1,9 +1,18 @@
-FROM golang:1.8
+FROM golang:1.13 AS builder
+
+ENV GOBIN=/go/bin
+
+COPY . . 
+
+RUN go get . && \
+    CGO_ENABLED=0 go build -ldflags="-w -s" -o /go/bin/impressive
+
+FROM scratch
+
+COPY --from=builder /go/bin/impressive .
 
 ENV PORT 3000
 
-RUN go get -u github.com/colm2/impressive
-
 EXPOSE 3000
 
-CMD /bin/bash -c "cd /go/bin && ./impressive"
+ENTRYPOINT [ "./impressive" ]
